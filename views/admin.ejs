@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Painel Admin – <%= appName %></title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <div class="container">
+    <header class="header admin-header">
+      <h1>🏳️‍🌈 Painel de Arrecadação</h1>
+      <p class="subtitle">Gerencie as doações da <%= appName %></p>
+    </header>
+
+    <main class="main-content">
+      <div class="stats-section">
+        <div class="stat-card">
+          <h3>Meta</h3>
+          <div class="stat-value">R$ <%= goal.toFixed(2) %></div>
+        </div>
+        <div class="stat-card">
+          <h3>Total Arrecadado</h3>
+          <div class="stat-value">R$ <%= total.toFixed(2) %></div>
+        </div>
+        <div class="stat-card">
+          <h3>Progresso</h3>
+          <div class="stat-value"><%= Math.round((total / goal) * 100) %>%</div>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <h2>📝 Registrar Nova Doação</h2>
+        <form method="POST" action="/admin" class="donation-form">
+          <div class="form-group">
+            <label for="name">Nome do Doador:</label>
+            <input type="text" id="name" name="name" placeholder="Digite o nome" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="amount">Valor (R$):</label>
+            <input type="number" id="amount" name="amount" step="0.01" min="0.01" placeholder="0.00" required>
+          </div>
+          
+          <button type="submit" class="submit-btn">➕ Adicionar Doação</button>
+        </form>
+      </div>
+
+      <div class="donations-section">
+        <h2>📋 Últimas Contribuições</h2>
+        <% if (donations && donations.length > 0) { %>
+          <div class="donations-list">
+            <% donations.forEach(d => { %>
+              <div class="donation-item">
+                <div class="donation-info">
+                  <span class="donor-name"><%= d.name %></span>
+                  <span class="donation-amount">R$ <%= d.amount.toFixed(2) %></span>
+                </div>
+                <div class="donation-date">
+                  <%= new Date(d.created_at).toLocaleString('pt-BR') %>
+                </div>
+              </div>
+            <% }) %>
+          </div>
+        <% } else { %>
+          <p class="no-donations">Nenhuma doação registrada ainda.</p>
+        <% } %>
+      </div>
+
+      <div class="actions-section">
+        <a href="/" class="action-btn">👁️ Ver Página Pública</a>
+        <button onclick="location.reload()" class="action-btn">🔄 Atualizar</button>
+      </div>
+    </main>
+
+    <footer class="footer">
+      <p>🏳️‍🌈 <%= appName %> - Painel Administrativo</p>
+    </footer>
+  </div>
+</body>
+</html> 

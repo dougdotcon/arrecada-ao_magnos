@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= appName %> - Arrecadação</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <div class="container">
+    <header class="header">
+      <h1>🏳️‍🌈 Parada Gay – <%= appName %></h1>
+      <p class="subtitle"><%= appDescription %></p>
+    </header>
+
+    <main class="main-content">
+      <div class="progress-section">
+        <div class="goal-info">
+          <h2>Meta de Arrecadação</h2>
+          <div class="amount-display">
+            <span class="current">R$ <%= total.toFixed(2) %></span>
+            <span class="separator">/</span>
+            <span class="goal">R$ <%= goal.toFixed(2) %></span>
+          </div>
+        </div>
+
+        <div class="progress-bar">
+          <div class="progress-fill" style="width: <%= Math.min((total / goal) * 100, 100) %>%"></div>
+        </div>
+
+        <div class="percentage">
+          <%= Math.round((total / goal) * 100) %>% da meta alcançada
+        </div>
+      </div>
+
+      <div class="donation-section">
+        <h3>💖 Contribua via PIX</h3>
+        <div class="qr-container">
+          <img src="/images/qr.png" alt="QR Code PIX" class="qr-code">
+          <p class="qr-instruction">Escaneie o QR Code para fazer sua doação</p>
+        </div>
+      </div>
+
+      <div class="share-section">
+        <h3>📢 Compartilhe e ajude!</h3>
+        <p>Convide seus amigos para participar desta causa incrível!</p>
+        <div class="social-buttons">
+          <button class="share-btn whatsapp" onclick="shareWhatsApp()">WhatsApp</button>
+          <button class="share-btn facebook" onclick="shareFacebook()">Facebook</button>
+          <button class="share-btn instagram" onclick="shareInstagram()">Instagram</button>
+        </div>
+      </div>
+    </main>
+
+    <footer class="footer">
+      <p>🏳️‍🌈 <%= appName %> - Orgulho e Diversidade</p>
+    </footer>
+  </div>
+
+  <script>
+    const appName = '<%= appName %>';
+    
+    function shareWhatsApp() {
+      const text = encodeURIComponent('🏳️‍🌈 Ajude a ' + appName + '! Contribua para a maior Parada Gay da região! Acesse: ' + window.location.href);
+      window.open(`https://wa.me/?text=${text}`, '_blank');
+    }
+
+    function shareFacebook() {
+      const url = encodeURIComponent(window.location.href);
+      window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, '_blank');
+    }
+
+    function shareInstagram() {
+      alert('Copie o link e compartilhe no Instagram!');
+      navigator.clipboard.writeText(window.location.href);
+    }
+  </script>
+</body>
+</html> 
